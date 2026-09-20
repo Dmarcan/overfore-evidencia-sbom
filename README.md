@@ -15,9 +15,22 @@ Analisis con Grype 0.119.0, base de vulnerabilidades v6.1.9 del 19-09-2026.
 - `vulnerabilidades/grype-syft-dev.json` - 121 coincidencias.
 - `vulnerabilidades/grype-cdxgen.json` - 121 coincidencias.
 - `log-comandos.txt` - registro de la sesion de consola.
+- `package-lock.json` - archivo de bloqueo del proyecto en el commit 5509b73. Es la fuente de los SBOM.
 
 Los conteos son de componentes de terceros. No se cuenta el paquete raiz del
 proyecto ni el archivo de bloqueo, que los generadores registran aparte.
+
+## Por que 1329 entradas y 1158 componentes
+
+El package-lock.json tiene 1329 dependencias, pero los SBOM tienen 1158.
+No falta nada: npm instala la misma version de un paquete en varias carpetas
+de node_modules. Por ejemplo, minimatch 3.1.5 aparece 16 veces. En total hay
+171 entradas repetidas, y el SBOM registra cada paquete y version una sola vez.
+
+1329 - 171 = 1158.
+
+Si un paquete esta en varias versiones distintas, el SBOM si las cuenta por
+separado. Por ejemplo, semver aparece en 4 versiones y son 4 componentes.
 
 ## Comandos
 
