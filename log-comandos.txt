@@ -1,0 +1,80 @@
+Microsoft Windows [Versión 10.0.26200.9457]
+(c) Microsoft Corporation. Todos los derechos reservados.
+
+C:\dev\fep>git clone https://github.com/GabrielSanzana/road-to-fire.git 01_repositorio
+Cloning into '01_repositorio'...
+remote: Enumerating objects: 2682, done.
+remote: Counting objects: 100% (212/212), done.
+remote: Compressing objects: 100% (66/66), done.
+remote: Total 2682 (delta 170), reused 168 (delta 142), pack-reused 2470 (from 2)
+Receiving objects: 100% (2682/2682), 5.21 MiB | 8.67 MiB/s, done.
+Resolving deltas: 100% (1836/1836), done.
+
+C:\dev\fep>cd 01_repositorio
+
+C:\dev\fep\01_repositorio>git checkout 5509b73
+Note: switching to '5509b73'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 5509b73 Add support for labeling assets
+
+C:\dev\fep\01_repositorio>cdxgen -t javascript --spec-version 1.7 -o cdxgen.cdx.json .
+"cdxgen" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+
+C:\dev\fep\01_repositorio>npm install -g @cyclonedx/cdxgen@13.0.1
+npm error code ETARGET
+npm error notarget No matching version found for @cyclonedx/cdxgen@13.0.1.
+npm error notarget In most cases you or one of your dependencies are requesting a package version that doesn't exist.
+npm error A complete log of this run can be found in: C:\Users\david\AppData\Local\npm-cache\_logs\2026-09-19T22_33_59_748Z-debug-0.log
+
+C:\dev\fep\01_repositorio>npm install -g @cyclonedx/cdxgen
+npm warn tarball tarball data for strip-ansi@https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.2.0.tgz (sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w==) seems to be corrupted. Trying again.
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+
+added 191 packages in 33s
+
+51 packages are looking for funding
+  run `npm fund` for details
+
+C:\dev\fep\01_repositorio>cdxgen -t javascript --spec-version 1.7 -o cdxgen.cdx.json .
+
+C:\dev\fep\01_repositorio>syft dir:. -o cyclonedx-json@1.7=syft.cdx.json
+"syft" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+
+C:\dev\fep\01_repositorio>docker run --rm -v "%cd%":/app anchore/syft:v1.52.0 dir:/app -o cyclonedx-json@1.7=/app/syft.cdx.json
+Unable to find image 'anchore/syft:v1.52.0' locally
+v1.52.0: Pulling from anchore/syft
+Digest: sha256:500e2d872ac019436926e8322b4fc1f39441d94d21f6f4046c6ff29b30e8cb02
+Status: Downloaded newer image for anchore/syft:v1.52.0
+[0001]  WARN no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+
+C:\dev\fep\01_repositorio>docker run --rm -e SYFT_JAVASCRIPT_INCLUDE_DEV_DEPENDENCIES=true -v "%cd%":/app anchore/syft:v1.52.0 dir:/app -o cyclonedx-json@1.7=/app/syft-dev.cdx.json
+[0000]  WARN no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+
+C:\dev\fep\01_repositorio>docker run --rm -v "%cd%":/app anchore/grype:v0.119.0 sbom:/app/cdxgen.cdx.json -o json > grype-cdxgen.json
+Unable to find image 'anchore/grype:v0.119.0' locally
+v0.119.0: Pulling from anchore/grype
+Digest: sha256:8c2c9234a345577a6d321a4753aa3ee1276d8975c8452d2344a56b57733ecad3
+Status: Downloaded newer image for anchore/grype:v0.119.0
+
+C:\dev\fep\01_repositorio>docker run --rm -v "%cd%":/app anchore/grype:v0.119.0 sbom:/app/syft.cdx.json -o json > grype-syft.json
+
+C:\dev\fep\01_repositorio>docker run --rm -v "%cd%":/app anchore/grype:v0.119.0 sbom:/app/syft-dev.cdx.json -o json > grype-syft-dev.json
+
+C:\dev\fep\01_repositorio>
